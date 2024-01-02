@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AelionApp", "AelionApp\AelionApp.csproj", "{F661513C-DBF9-4146-8651-5C34714D1878}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F661513C-DBF9-4146-8651-5C34714D1878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F661513C-DBF9-4146-8651-5C34714D1878}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F661513C-DBF9-4146-8651-5C34714D1878}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F661513C-DBF9-4146-8651-5C34714D1878}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C3FD6E56-A60D-4DED-A0E8-40C06C9FA814}
+	EndGlobalSection
+EndGlobal
