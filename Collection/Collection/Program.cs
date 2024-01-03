@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 void DisplayList(IList<string> list)
 {
@@ -171,7 +172,7 @@ void PlayWithDictionary()
     // try methods : TryGetValue, ContainsKey
     foreach (string city in cities)
     {
-    Console.WriteLine("***** 1st");
+        Console.WriteLine("***** 1st");
         cityPopulation.TryGetValue(city, out UInt32 population);
         if (population > 0)
         {
@@ -182,15 +183,15 @@ void PlayWithDictionary()
             Console.WriteLine($"Population of {city} is unknown");
         }
 
-    Console.WriteLine("***** 2nde");
-    if (cityPopulation.TryGetValue(city, out UInt32 pop))
-    {
-        Console.WriteLine($"Population of {city} is {pop} people");
-    }
-    else
-    {
-        Console.WriteLine($"Population of {city} is unknown");
-    }
+        Console.WriteLine("***** 2nde");
+        if (cityPopulation.TryGetValue(city, out UInt32 pop))
+        {
+            Console.WriteLine($"Population of {city} is {pop} people");
+        }
+        else
+        {
+            Console.WriteLine($"Population of {city} is unknown");
+        }
     }
 
     // Iterate over Dictionary
@@ -221,10 +222,42 @@ void PlayWithDictionary()
     {
         Console.WriteLine(pop);
     }
+}
 
+(string, int) GenerateCity()
+{
+    return ("Toulouse", 477_000);
+}
 
+// tuple nommé
+(string City, int Population) GenerateCityN()
+{
+    //return ("Toulouse", 477_000); // still OK
+    return (City: "Toulouse", Population: 477_000);
+}
 
+void PlayWithTuple()
+{
+    // tuple (struct): (string, int) or ValueTuple<string, int>
+    var cityPop = ("Pau", 77_000);
+    Console.WriteLine(cityPop.Item1);
+    Console.WriteLine(cityPop.Item2);
 
+    // tuple (class) : Tuple<string, int>
+    var citypop2 = cityPop.ToTuple();
+    Console.WriteLine(citypop2);
+
+    var cityPop3 = GenerateCity();
+    Console.WriteLine(cityPop3);
+
+    var (city, pop) = GenerateCity();
+    Console.WriteLine($"{city} has population {pop}");
+
+    var cityPop4 = GenerateCityN();
+    Console.WriteLine($"{cityPop4.City} has population {cityPop4.Population}");
+
+    Console.WriteLine(cityPop4 == ("Toulouse", 477_000));
+    Console.WriteLine(cityPop4 == (City: "Toulouse", Population: 477_000));
 }
 
 //PlayWithLists();
@@ -235,3 +268,4 @@ void PlayWithDictionary()
 //Console.WriteLine("-------");
 //PlayWithSortedSet();
 //PlayWithDictionary();
+PlayWithTuple();
