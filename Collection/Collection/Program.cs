@@ -28,25 +28,25 @@ void DisplayCollection<T>(ICollection<T> collection, Int32 maxDisplay = 10)
 
         // au dela de 10 éléments, afficher uniquement les 5 premiers et 5 derniers avec la methode getEnumerator poru gérer la boucle à la main
         var it = collection.GetEnumerator();
-    Int32 spanSize = maxDisplay / 2;
-    Int32 skipSize = collection.Count - 2 * spanSize;
+        Int32 spanSize = maxDisplay / 2;
+        Int32 skipSize = collection.Count - 2 * spanSize;
 
-    for (Int32 i = 0; i < spanSize; i++)
-    {
-        it.MoveNext();
-    var elt = it.Current;
-    Console.WriteLine(elt);
-    }
+        for (Int32 i = 0; i < spanSize; i++)
+        {
+            it.MoveNext();
+            var elt = it.Current;
+            Console.WriteLine(elt);
+        }
 
-    Console.WriteLine("... ");
-    for (Int32 i = 0; i < skipSize; i++) it.MoveNext();
+        Console.WriteLine("... ");
+        for (Int32 i = 0; i < skipSize; i++) it.MoveNext();
 
-    for (Int32 i = 0; i < 5; i++)
-    {
-        it.MoveNext();
-    var elt = it.Current;
-    Console.WriteLine(elt);
-    }
+        for (Int32 i = 0; i < 5; i++)
+        {
+            it.MoveNext();
+            var elt = it.Current;
+            Console.WriteLine(elt);
+        }
 
 
     }
@@ -118,6 +118,35 @@ void PlayWithLists3()
     Console.WriteLine(cities2.GetType());
 }
 
+void PlayWithSortedSet()
+{
+    IList<string> cityList = ["Pau", "Paris", "Toulouse", "Bordeaux", "Olorons", "Marseille", "Lyon", "Orléans", "Clermont-Ferrand"];
+    ISet<string> citySet = new SortedSet<string>(cityList); // Attention! si même longueur, l'élément disparait
+    DisplayCollection(cityList);
+    DisplayCollection(citySet);
+
+    IComparer<string> comparer = new StringLengthComparer(); // old methode
+    ISet<string> citySet2 = new SortedSet<string>(citySet, comparer);
+    Console.WriteLine(" ");
+    DisplayCollection(citySet2);
+
+    // easier comparer method
+    IComparer<string> comparerLengthDesc = Comparer<string>.Create(
+        (s1, s2) => s2.Length - s1.Length
+        );
+    ISet<string> citySet3 = new SortedSet<string>(citySet, comparerLengthDesc);
+
+
+    // TODO update comparer
+    IComparer<string> comparerLengthDesc2 = Comparer<string>.Create(
+        (s1, s2) =>
+        {
+            return s2.Length - s1.Length;
+        }
+            );
+    ISet<string> citySet4 = new SortedSet<string>(citySet, comparerLengthDesc2);
+
+}
 
 PlayWithLists();
 Console.WriteLine("-------");
@@ -125,3 +154,4 @@ PlayWithLists2();
 Console.WriteLine("-------");
 PlayWithLists3();
 Console.WriteLine("-------");
+PlayWithSortedSet();
