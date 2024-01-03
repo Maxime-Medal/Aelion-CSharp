@@ -148,10 +148,90 @@ void PlayWithSortedSet()
 
 }
 
-PlayWithLists();
-Console.WriteLine("-------");
-PlayWithLists2();
-Console.WriteLine("-------");
-PlayWithLists3();
-Console.WriteLine("-------");
-PlayWithSortedSet();
+
+void PlayWithDictionary()
+{
+    IDictionary<string, UInt32> cityPopulation = new Dictionary<string, UInt32>()
+    {
+        {"Pau", 77_000},
+        {"Toulouse", 470_000},
+        {"Paris", 2_161_000 }
+    };
+    cityPopulation.Add("Orléans", 114_000);
+    DisplayCollection(cityPopulation);
+    cityPopulation["Orléans"] = 114_611;
+    DisplayCollection(cityPopulation);
+    cityPopulation["Marseille"] = 860_000; // Si en place écrase sinon l'ajoute
+    DisplayCollection(cityPopulation);
+
+    Console.WriteLine(cityPopulation["Marseille"]); // en JS cityPopulation.Marseille
+
+    IList<string> cities = ["Marseille", "Bordeaux"];
+
+    // try methods : TryGetValue, ContainsKey
+    foreach (string city in cities)
+    {
+    Console.WriteLine("***** 1st");
+        cityPopulation.TryGetValue(city, out UInt32 population);
+        if (population > 0)
+        {
+            Console.WriteLine($"Population of {city} is {population} people");
+        }
+        else
+        {
+            Console.WriteLine($"Population of {city} is unknown");
+        }
+
+    Console.WriteLine("***** 2nde");
+    if (cityPopulation.TryGetValue(city, out UInt32 pop))
+    {
+        Console.WriteLine($"Population of {city} is {pop} people");
+    }
+    else
+    {
+        Console.WriteLine($"Population of {city} is unknown");
+    }
+    }
+
+    // Iterate over Dictionary
+    foreach (KeyValuePair<string, UInt32> cityPop in cityPopulation)
+    {
+        Console.WriteLine($"{cityPop} : {cityPop.Key} => {cityPop.Value}");
+    }
+
+    Console.WriteLine("**********");
+    // iterate using deconstructor of type KeyValuePair
+    foreach ((var city, var pop) in cityPopulation)
+    {
+        Console.WriteLine($"{city} => {pop}");
+    }
+
+    // use just key
+    foreach (string city in cityPopulation.Keys)
+    {
+        Console.WriteLine(city);
+    }
+
+    foreach (UInt32 pop in cityPopulation.Values)
+    {
+        Console.WriteLine(pop);
+    }
+
+    foreach (var pop in cityPopulation)
+    {
+        Console.WriteLine(pop);
+    }
+
+
+
+
+}
+
+//PlayWithLists();
+//Console.WriteLine("-------");
+//PlayWithLists2();
+//Console.WriteLine("-------");
+//PlayWithLists3();
+//Console.WriteLine("-------");
+//PlayWithSortedSet();
+//PlayWithDictionary();
