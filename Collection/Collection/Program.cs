@@ -36,22 +36,20 @@ void DisplayCollection<T>(ICollection<T> collection, Int32 maxDisplay = 10)
         {
             it.MoveNext();
             var elt = it.Current;
-            Console.WriteLine(elt);
+            Console.Write(elt + " ");
         }
 
-        Console.WriteLine("... ");
+        Console.Write("... ");
         for (Int32 i = 0; i < skipSize; i++) it.MoveNext();
 
         for (Int32 i = 0; i < 5; i++)
         {
             it.MoveNext();
             var elt = it.Current;
-            Console.WriteLine(elt);
+            Console.Write(elt + " ");
         }
 
-
     }
-
 
     Console.WriteLine("]");
 }
@@ -105,10 +103,62 @@ void PlayWithLists2()
     {
         bigData.Add(rand.NextDouble());
     }
+
     Console.WriteLine($"Size big data : {bigData.Count}");
-    DisplayCollection(bigData);
+    //DisplayCollection(bigData);
     Console.WriteLine(bigData[0]);
     Console.WriteLine(bigData[^1]);
+
+    var first100 = bigData.Take(100)
+        .ToList();
+    DisplayCollection(first100);
+
+    var data20 = bigData.Take(100)
+        .Select(x => 20 * x)
+        .ToList(); // ne pa oublier de ToList
+    DisplayCollection(data20);
+
+    // check all values of data20 are in range [0 - 20[
+    bool okRange = data20.All(d => (d >= 0.0) && (d < 20));
+    Console.WriteLine($"All Values are in range [0 - 20[ : {okRange}");
+
+    // is there any value >= 19?
+    bool okAnyGreather19 = data20.Any(x => x >= 19.0); // en nombre flotant
+    Console.WriteLine($"is there any value >= 19 ? : {okAnyGreather19}");
+
+    // how many values >= 19 ?
+    var countGreather19 = data20.Count(x => x >= 19.0);
+    Console.WriteLine($"how many values >= 19 ? count = {countGreather19}");
+
+    int nbGreather19b = (from data in data20
+                         where data >= 19
+                         select data).Count();
+    Console.WriteLine($"how many values >= 19 ? count = {nbGreather19b}");
+
+    var topValues = bigData.Where(x => x >= 0.95)
+        .OrderBy(x => x)
+        .ToList();
+    DisplayCollection(topValues);
+
+    IEnumerable<char> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+    var taggedData = bigData
+            .Zip(letters)
+            .Select(valueLetter => (valueLetter.First * 20.0, valueLetter.Second)) // le ZIP arrete de faire des tuples une fois que le Ienumarable le plus court et terniné
+            .ToList();
+    DisplayCollection(taggedData);
+
+    var range = ..100; // ^pour compter à partir de la fin // not Linq'able'
+    var rangeLinq = Enumerable.Range(0, 100); // is Linq
+
+    var arrayOf100 = bigData.ToArray()[range]; // le range fonctionne avec un array et non une liste
+    var sample = Enumerable.Range(0, 100)
+       .Select(x => bigData[x * 1000])
+       .ToList();
+    DisplayCollection(sample);
+
+    var indexedData = data20.Select((x, i) => (i, x))
+        .ToHashSet();
+    DisplayCollection(indexedData);
 }
 
 void PlayWithLists3()
@@ -262,10 +312,10 @@ void PlayWithTuple()
 
 //PlayWithLists();
 //Console.WriteLine("-------");
-//PlayWithLists2();
+PlayWithLists2();
 //Console.WriteLine("-------");
 //PlayWithLists3();
 //Console.WriteLine("-------");
 //PlayWithSortedSet();
 //PlayWithDictionary();
-PlayWithTuple();
+//PlayWithTuple();
