@@ -1,6 +1,9 @@
 ﻿using MovieMain.Models;
 using System;
 
+void PlayWithMovies()
+{
+
 // a class type is a reference type
 Movie mNull = null;
 Movie movieEmplty = new();
@@ -77,3 +80,55 @@ var res2 = movies.Where(m => m == movieSearch).ToList();
 var res3 = movies.Where(m => m == movie).ToList();
 
 Console.WriteLine($" {res1.Count} vs {res2.Count} vs {res3.Count}") ;
+}
+
+// lister les fichers créer pendant la formation
+void ExploreDirectory(string directory)
+{
+    Console.WriteLine(Directory.Exists(directory));
+
+    Console.WriteLine("--File exist");
+    Console.WriteLine(File.Exists(@"C:\Projects\Aelion\MovieApp\MovieApp\Models\Person.cs"));
+
+    var dirs = Directory.EnumerateFiles(directory, "*.cs", SearchOption.AllDirectories);
+
+    foreach (var dir in dirs)
+    {
+    Console.WriteLine(dir);
+        var fileInfo = new FileInfo(dir);
+        Console.WriteLine($"{fileInfo.Name}: {fileInfo.LastWriteTime}, {fileInfo.Length}");
+    }
+}
+
+void SaveMovies(string file, IEnumerable<Movie> movies)
+{
+    //File.WriteAllText(file, String.Join('\n', movies.Select(m => m.ToString())));
+    File.WriteAllText(file, String.Join(Environment.NewLine, movies.Select(m => m.ToString())));
+}
+
+//PlayWithMovies();
+ExploreDirectory(@"C:\Projects\Aelion");
+
+IList<Movie> movies = [
+    new Movie("Oppenheimer", 2023),
+    new Movie("Dune part 2", 2024),
+    new Movie("Donjon et dragon", 2023),
+    new Movie("La passion de Dodin Bouffan", 2023),
+];
+
+SaveMovies(@"C:\Temp\movies.txt", movies);
+
+IList<Movie> LoadMovies(string file)
+{
+    var movieList = new List<Movie>();
+    var stream = File.OpenText(file);
+
+
+    string line;
+    while ((line = stream.ReadLine()) != null)
+    {
+        var movie = new Movie(line, 2023);  // TODO: parse Movie object
+        movieList.Add(movie);
+    };
+    return movieList;
+}
